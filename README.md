@@ -8,34 +8,36 @@ Showing my ability to create a realtime serverless app using AWS AppSync, which 
 GraphQL in generality provides; efficient data fetching as clients request only the fields they need, reducing over-fetching and under-fetching, provides flexible queries as one endpoint can serve multiple use cases, and it provides built-in subscriptions which are basically just using WebSockets under the hood.
 
 PROJECT STRUCTURE:
+
 REALTIME-CHAT
-|-- mapping-templates
-   |-- ForwardResult.response.vtl
-   |-- Message.request.vtl
-|-- .env
-|-- schema.graphql
-|-- serverless.yml
-|-- deployment.txt
+
+      |-- mapping-templates
+         |-- ForwardResult.response.vtl
+         |-- Message.request.vtl
+      |-- .env
+      |-- schema.graphql
+      |-- serverless.yml
+      |-- deployment.txt
 
 
 [.env] file for transparency:
-===========================================
-# ==============================
-# AWS Environment Variables
-# ==============================
-export AWS_ACCOUNT_ID=123456789  # Replace with your AWS Account ID
-
-# Fetch the AppSync API ID dynamically using AWS CLI
-export APPSYNC_API_ID=$(aws appsync list-graphql-apis \
-    --query 'graphqlApis[?name==`realtimeChatAPI`].apiId' \
-    --output text >/dev/null 2>&1)
-
-# Fetch the API Key dynamically using AWS CLI
-export APPSYNC_API_KEY=$(aws appsync list-api-keys \
-    --api-id "$APPSYNC_API_ID" \
-    --query 'apiKeys[0].id' \
-    --output text >/dev/null 2>&1)
-===========================================
+   
+      # ==============================
+      # AWS Environment Variables
+      # ==============================
+      export AWS_ACCOUNT_ID=123456789  # Replace with your AWS Account ID
+      
+      # Fetch the AppSync API ID dynamically using AWS CLI
+      export APPSYNC_API_ID=$(aws appsync list-graphql-apis \
+          --query 'graphqlApis[?name==`realtimeChatAPI`].apiId' \
+          --output text >/dev/null 2>&1)
+      
+      # Fetch the API Key dynamically using AWS CLI
+      export APPSYNC_API_KEY=$(aws appsync list-api-keys \
+          --api-id "$APPSYNC_API_ID" \
+          --query 'apiKeys[0].id' \
+          --output text >/dev/null 2>&1)
+      
 
 
 Brief Schema/Timeline:
