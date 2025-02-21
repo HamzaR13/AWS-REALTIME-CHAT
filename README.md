@@ -41,28 +41,41 @@ export APPSYNC_API_KEY=$(aws appsync list-api-keys \
 Brief Schema/Timeline:
 
 1) Define GraphQL Schema (schema.graphql)
+
 > Specifies Queries, Mutations, and Subscriptions for real-time communication.
+
 > Uses the @aws_subscribe directive to link real-time updates to the correct mutation.
 
 2) Set Up Mapping Templates (mapping-templates/)
+
 > Uses AWS AppSync resolvers with Velocity Template Language (VTL) to process GraphQL requests/responses.
+
 > Request Template (Message.request.vtl) extracts user input and formats it.
+
 > Response Template (ForwardResult.response.vtl) formats and returns the response.
 
 3) Configure Serverless Framework (serverless.yml)
+
 > Uses the serverless-appsync-plugin to automate API deployment.
+
 > Defines the API authentication type, schema location, and mapping templates.
+
 > Uses local resolvers (type: NONE) to relay messages in real-time without storing them in a database.
 
 4) Set Up Environment Variables (.env)
+
 > Dynamically retrieves the AppSync API ID and API Key using AWS CLI.
+
 > Ensures secure and automated configuration for deployment.
 
 5) Deploy API to AWS AppSync
+
 > Installs dependencies with:
 npm install --dev serverless-appsync-plugin
+
 > Deploys the API with a single command:
 . .env && sls deploy
+
 > The API is now live on AWS AppSync and supports real-time messaging.
 
 6) Client App
