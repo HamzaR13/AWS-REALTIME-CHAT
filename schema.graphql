@@ -1,0 +1,48 @@
+# ============================================
+# Real-time Chat API - GraphQL Schema
+# ============================================
+# This schema defines a serverless real-time chat API using AWS AppSync.
+# It includes support for:
+# Queries (Fetching data)
+# Mutations (Sending messages)
+# Subscriptions (Live message updates via WebSockets)
+# ============================================
+
+schema {
+    query: Query          # Handles retrieving user-related data
+    mutation: Mutation    # Allows sending messages to other users
+    subscription: Subscription  # Listens for new messages in real-time
+}
+
+# Subscription: Enables live message updates over WebSockets
+type Subscription {
+    inbox(to: String): MessagePage  # Users subscribe to new messages sent to them
+    @aws_subscribe(mutations: ["message"])  # Automatically triggers when a new message is sent
+}
+
+# Mutation: Handles sending messages
+type Mutation {
+    sendMessage(content: String!, recipient: String!): MessagePage!  
+    # content: The actual message text (required)
+    # recipient: The username of the person receiving the message (required)
+    # Returns a paginated response of messages (MessagePage)
+}
+
+# Message Structure: Defines the format of chat messages
+type Message {
+    sender: String!   # Username of the sender (required)
+    recipient: String! # Username of the recipient (required)
+    content: String!  # The message body (required)
+    timestamp: String! # Time when the message was sent (ISO 8601 format)
+}
+
+# Query: Used for fetching general user data (e.g., authentication checks)
+type Query {
+    currentUser: String  # Returns the username of the currently authenticated user
+}
+
+# Pagination Helper Type (Optional)
+type MessagePage {
+    messages: [Message]  # A list of messages
+    nextToken: String    # Used for pagination (if needed)
+}
