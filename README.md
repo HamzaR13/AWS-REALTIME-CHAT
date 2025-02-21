@@ -9,8 +9,7 @@ GraphQL in generality provides; efficient data fetching as clients request only 
 
 PROJECT STRUCTURE:
 
-REALTIME-CHAT
-
+      REALTIME-CHAT
       |-- mapping-templates
          |-- ForwardResult.response.vtl
          |-- Message.request.vtl
